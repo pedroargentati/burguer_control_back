@@ -32,4 +32,10 @@ public class EventController extends RestCommonService {
         return super.buildResponseForEntity(eventService.updateEvent(eventDTO));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<EventDTO> deleteEvent(@PathVariable Long id) throws RecordNotFoundException {
+        eventService.deleteEvent(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

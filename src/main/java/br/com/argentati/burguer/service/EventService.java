@@ -49,4 +49,12 @@ public class EventService {
         return new EventDTO(eventRepository.save(event));
     }
 
+    @Transactional
+    public void deleteEvent(Long id) throws RecordNotFoundException {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Evento não encontrado."));
+
+        eventRepository.delete(event);
+    }
+
 }
