@@ -1,6 +1,7 @@
 package br.com.argentati.burguer.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,11 @@ public class Event {
     private Long id;
 
     @Column(nullable = false, length = 100)
+    @NotNull(message = "O nome do evento é obrigatório.")
     private String name;
 
     @Column(name = "event_date", nullable = false)
+    @NotNull(message = "A data do evento é obrigatória.")
     private LocalDate eventDate;
 
     @Column(name = "created_at", nullable = false, updatable = false)
