@@ -1,5 +1,6 @@
 package br.com.argentati.burguer.model.entity;
 
+import br.com.argentati.burguer.model.dto.EventDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,4 +31,15 @@ public class Event {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public void update(EventDTO eventDTO) {
+        if (eventDTO.eventDate() != null) {
+            this.eventDate = eventDTO.eventDate();
+        }
+
+        if (eventDTO.name() != null) {
+            this.name = eventDTO.name();
+        }
+    }
+
 }

@@ -27,4 +27,9 @@ public class EventController extends RestCommonService {
         return super.buildResponseForPost(eventService.createEvent(eventDTO), eventDTO.id());
     }
 
+    @PutMapping
+    public ResponseEntity<EventDTO> updateEvent(@RequestBody EventDTO eventDTO) throws RecordNotFoundException {
+        return super.buildResponseForEntity(eventService.updateEvent(eventDTO));
+    }
+
 }

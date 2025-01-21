@@ -1,6 +1,8 @@
 package br.com.argentati.burguer.service;
 
+import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.EventDTO;
+import br.com.argentati.burguer.model.entity.Event;
 import br.com.argentati.burguer.repository.EventRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,16 @@ public class EventService {
     @Transactional
     public EventDTO createEvent(EventDTO eventDTO) {
         return new EventDTO(eventRepository.save(eventDTO.toEntity()));
+    }
+
+    @Transactional
+    public EventDTO updateEvent(EventDTO eventDTO) throws RecordNotFoundException {
+        Event event = eventRepository.findById(eventDTO.id())
+                .orElseThrow(() -> new RecordNotFoundException("Evento não encontrado."));
+
+        event.update(eventDTO);
+
+        return new EventDTO(eventRepository.save(event));
     }
 
 }
