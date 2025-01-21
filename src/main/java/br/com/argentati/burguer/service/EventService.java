@@ -39,6 +39,12 @@ public class EventService {
         return new EventDTO(eventRepository.save(eventDTO.toEntity()));
     }
 
+    /**
+     * Atualiza um evento.
+     * @param eventDTO Dados do evento.
+     * @return O evento atualizado.
+     * @throws RecordNotFoundException Se o evento não for encontrado.
+     */
     @Transactional
     public EventDTO updateEvent(EventDTO eventDTO) throws RecordNotFoundException {
         Event event = eventRepository.findById(eventDTO.id())
@@ -49,6 +55,11 @@ public class EventService {
         return new EventDTO(eventRepository.save(event));
     }
 
+    /**
+     * Deleta um evento.
+     * @param id Id do evento.
+     * @throws RecordNotFoundException Se o evento não for encontrado.
+     */
     @Transactional
     public void deleteEvent(Long id) throws RecordNotFoundException {
         Event event = eventRepository.findById(id)
