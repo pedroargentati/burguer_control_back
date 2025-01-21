@@ -1,6 +1,8 @@
 package br.com.argentati.burguer.model.entity;
 
+import br.com.argentati.burguer.model.dto.PersonDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "people")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +23,11 @@ public class Person {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public void update(PersonDTO person) {
+        if (person.name() != null) {
+            this.name = person.name();
+        }
+    }
+
 }
