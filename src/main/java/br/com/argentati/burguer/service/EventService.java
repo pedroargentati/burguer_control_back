@@ -2,6 +2,7 @@ package br.com.argentati.burguer.service;
 
 import br.com.argentati.burguer.model.dto.EventDTO;
 import br.com.argentati.burguer.repository.EventRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,16 @@ public class EventService {
         return eventRepository.findById(id)
                 .map(EventDTO::new)
                 .orElse(null);
+    }
+
+    /**
+     * Cria um evento.
+     * @param eventDTO Dados do evento.
+     * @return O evento criado.
+     */
+    @Transactional
+    public EventDTO createEvent(EventDTO eventDTO) {
+        return new EventDTO(eventRepository.save(eventDTO.toEntity()));
     }
 
 }

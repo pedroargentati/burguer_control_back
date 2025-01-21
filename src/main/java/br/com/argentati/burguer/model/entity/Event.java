@@ -1,6 +1,7 @@
 package br.com.argentati.burguer.model.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "events")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Event {
 
     @Id
