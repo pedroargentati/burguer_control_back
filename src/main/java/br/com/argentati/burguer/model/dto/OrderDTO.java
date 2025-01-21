@@ -10,6 +10,13 @@ public record OrderDTO(
         String notes
 ) {
     public OrderDTO(Order order) {
-        this(order.getId(), order.getPerson().getName(), order.getEvent().getName(), order.getMeatDoneness().toString(), order.getNotes());
+        this(
+                order.getId(),
+                order.getPerson() != null ? order.getPerson().getName() : null,
+                order.getEvent() != null ? order.getEvent().getName() : null,
+                order.getMeatDoneness() != null ? order.getMeatDoneness().toString() : null,
+                order.getNotes()
+        );
     }
+
 }
