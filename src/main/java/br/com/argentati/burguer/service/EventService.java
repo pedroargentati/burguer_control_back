@@ -1,7 +1,29 @@
 package br.com.argentati.burguer.service;
 
+import br.com.argentati.burguer.model.dto.EventDTO;
+import br.com.argentati.burguer.repository.EventRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventService {
+
+    public final EventRepository eventRepository;
+
+    @Autowired
+    public EventService(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
+
+    /**
+     * Obtém um evento pelo id.
+     * @param id Id do evento.
+     * @return O evento.
+     */
+    public EventDTO getEvent(Long id) {
+        return eventRepository.findById(id)
+                .map(EventDTO::new)
+                .orElse(null);
+    }
+
 }
