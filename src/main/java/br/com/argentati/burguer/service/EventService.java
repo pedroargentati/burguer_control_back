@@ -22,6 +22,17 @@ public class EventService {
      * Obtém um evento pelo id.
      * @param id Id do evento.
      * @return O evento.
+     * @throws RecordNotFoundException Se o evento não for encontrado.
+     */
+    public Event getEntityEvent(Long id) throws RecordNotFoundException {
+       return eventRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Evento não encontrado."));
+    }
+
+    /**
+     * Obtém um evento pelo id.
+     * @param id Id do evento.
+     * @return O evento.
      */
     public EventDTO getEvent(Long id) {
         return eventRepository.findById(id)
@@ -47,8 +58,7 @@ public class EventService {
      */
     @Transactional
     public EventDTO updateEvent(EventDTO eventDTO) throws RecordNotFoundException {
-        Event event = eventRepository.findById(eventDTO.id())
-                .orElseThrow(() -> new RecordNotFoundException("Evento não encontrado."));
+        Event event = this.getEntityEvent(eventDTO.id());
 
         event.update(eventDTO);
 
@@ -62,8 +72,7 @@ public class EventService {
      */
     @Transactional
     public void deleteEvent(Long id) throws RecordNotFoundException {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Evento não encontrado."));
+        Event event = this.getEntityEvent(id);
 
         eventRepository.delete(event);
     }
