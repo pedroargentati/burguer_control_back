@@ -2,6 +2,7 @@ package br.com.argentati.burguer.exception.handler;
 
 
 import br.com.argentati.burguer.exception.BurguerControlException;
+import br.com.argentati.burguer.exception.OrderAlreadyExistsException;
 import br.com.argentati.burguer.exception.RecordNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -57,6 +58,16 @@ public class GlobalExceptionHandler {
 
         ResponseError response = new ResponseError(
                 interpolatedMessages,
+                HttpStatus.BAD_REQUEST,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(OrderAlreadyExistsException.class)
+    public ResponseEntity<ResponseError> handleOrderAlreadyExistsException(OrderAlreadyExistsException ex) {
+        ResponseError response = new ResponseError(
+                ex.getMessage(),
                 HttpStatus.BAD_REQUEST,
                 LocalDateTime.now()
         );

@@ -1,6 +1,7 @@
 package br.com.argentati.burguer.service;
 
 import br.com.argentati.burguer.enums.MeatDoneness;
+import br.com.argentati.burguer.exception.OrderAlreadyExistsException;
 import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.OrderDTO;
 import br.com.argentati.burguer.model.entity.Event;
@@ -32,18 +33,17 @@ public class OrderService {
         this.personService = personService;
     }
 
-    /**
-     * Cria um pedido.
-     * @param orderDTO Dados do pedido.
-     * @return O pedido criado.
-     * @throws RecordNotFoundException Se o evento ou a pessoa não forem encontrados.
-     */
     @Transactional
-    public Order createOrder(OrderDTO orderDTO) throws RecordNotFoundException {
-        logger.info("Criando pedido: " + orderDTO);
+    public Order createOrder(OrderDTO orderDTO) throws RecordNotFoundException, OrderAlreadyExistsException {
+        logger.info("Iniciando criação do pedido: " + orderDTO);
 
         Event event = eventService.getEntityEvent(orderDTO.eventId());
         Person person = personService.getEntityPerson(orderDTO.personId());
+
+        // Verifica se já existe um pedido para a pessoa
+        orderRepository.findOrderByPersonId(person.getId()).ifPresent(existingOrder -> {
+            throw new OrderAlreadyExistsException("Já existe um pedido para a pessoa informada.");
+        });
 
         Order order = Order.builder()
                 .createdAt(LocalDateTime.now())
@@ -53,7 +53,7 @@ public class OrderService {
                 .event(event)
                 .build();
 
-        logger.info("Pedido à ser criado: " + order);
+        logger.info("Pedido sendo salvo: " + order);
 
         return orderRepository.save(order);
     }

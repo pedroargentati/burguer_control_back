@@ -6,7 +6,7 @@ public enum MeatDoneness {
     BEM_PASSADO;
 
     public static MeatDoneness fromString(String value) {
-        return switch (value) {
+        return switch (value.toUpperCase()) {
             case "MAL_PASSADO" -> MAL_PASSADO;
             case "AO_PONTO" -> AO_PONTO;
             case "BEM_PASSADO" -> BEM_PASSADO;

@@ -1,5 +1,6 @@
 package br.com.argentati.burguer.model.entity;
 
+import br.com.argentati.burguer.converter.MeatDonenessConverter;
 import br.com.argentati.burguer.enums.MeatDoneness;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,6 +31,7 @@ public class Order {
 
     @Column(name = "meat_doneness", nullable = false)
     @Enumerated(EnumType.STRING)
+    @Convert(converter = MeatDonenessConverter.class)
     private MeatDoneness meatDoneness;
 
     @Column(columnDefinition = "TEXT")
