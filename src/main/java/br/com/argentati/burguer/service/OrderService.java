@@ -42,7 +42,7 @@ public class OrderService {
 
         // Verifica se já existe um pedido para a pessoa
         orderRepository.findOrderByPersonId(person.getId()).ifPresent(existingOrder -> {
-            throw new OrderAlreadyExistsException("Já existe um pedido para a pessoa informada.");
+            throw new OrderAlreadyExistsException(String.format("Já existe um pedido no evento %s para o (a) %s.", event.getName(), person.getName()));
         });
 
         Order order = Order.builder()
