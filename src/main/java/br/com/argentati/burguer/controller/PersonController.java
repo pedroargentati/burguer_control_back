@@ -4,6 +4,7 @@ import br.com.argentati.burguer.common.RestCommonService;
 import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.PersonDTO;
 import br.com.argentati.burguer.service.PersonService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +24,12 @@ public class PersonController extends RestCommonService {
     }
 
     @PostMapping
-    public ResponseEntity<PersonDTO> createPerson(@RequestBody PersonDTO eventDTO) {
+    public ResponseEntity<PersonDTO> createPerson(@Valid @RequestBody PersonDTO eventDTO) {
         return super.buildResponseForPost(personService.createPerson(eventDTO), eventDTO.id());
     }
 
     @PutMapping
-    public ResponseEntity<PersonDTO> updatePerson(@RequestBody PersonDTO eventDTO) throws RecordNotFoundException {
+    public ResponseEntity<PersonDTO> updatePerson(@Valid @RequestBody PersonDTO eventDTO) throws RecordNotFoundException {
         return super.buildResponseForEntity(personService.updatePerson(eventDTO));
     }
 

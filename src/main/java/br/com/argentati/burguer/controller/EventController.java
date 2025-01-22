@@ -4,6 +4,7 @@ import br.com.argentati.burguer.common.RestCommonService;
 import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.EventDTO;
 import br.com.argentati.burguer.service.EventService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +24,12 @@ public class EventController extends RestCommonService {
     }
 
     @PostMapping
-    public ResponseEntity<EventDTO> createEvent(@RequestBody EventDTO eventDTO) {
+    public ResponseEntity<EventDTO> createEvent(@Valid @RequestBody EventDTO eventDTO) {
         return super.buildResponseForPost(eventService.createEvent(eventDTO), eventDTO.id());
     }
 
     @PutMapping
-    public ResponseEntity<EventDTO> updateEvent(@RequestBody EventDTO eventDTO) throws RecordNotFoundException {
+    public ResponseEntity<EventDTO> updateEvent(@Valid @RequestBody EventDTO eventDTO) throws RecordNotFoundException {
         return super.buildResponseForEntity(eventService.updateEvent(eventDTO));
     }
 
