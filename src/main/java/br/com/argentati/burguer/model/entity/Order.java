@@ -2,8 +2,7 @@ package br.com.argentati.burguer.model.entity;
 
 import br.com.argentati.burguer.enums.MeatDoneness;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +10,10 @@ import java.time.LocalDateTime;
 @Table(name = "orders")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
 public class Order {
 
     @Id
