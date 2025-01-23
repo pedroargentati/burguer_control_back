@@ -162,6 +162,7 @@ public class OrderService {
      * @return Pedido atualizado
      * @throws RecordNotFoundException
      */
+    @Transactional
     public OrderDTO updateOrder(Long id, OrderDTO orderDTO) throws RecordNotFoundException {
         logger.info("Iniciando atualização do pedido: " + orderDTO);
 
@@ -173,4 +174,22 @@ public class OrderService {
 
         return new OrderDTO(orderRepository.save(order));
     }
+
+    /**
+     * Remove um pedido
+     *
+     * @param id ID do pedido
+     * @throws RecordNotFoundException
+     */
+    @Transactional
+    public OrderDTO deleteOrder(Long id) throws RecordNotFoundException {
+        logger.info("Iniciando remoção do pedido: " + id);
+        Order order = this.getOrderByIdEntity(id);
+
+        orderRepository.delete(order);
+
+        logger.info("Pedido removido: " + id);
+        return new OrderDTO(order);
+    }
+
 }

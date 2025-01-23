@@ -71,4 +71,11 @@ public class OrderController extends RestCommonService {
         return super.buildResponseForEntity(orderUpdated);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<OrderDTO> deleteOrder(@PathVariable Long id) throws RecordNotFoundException {
+        var order = orderService.deleteOrder(id);
+
+        return super.buildResponseForDelete(order);
+    }
+
 }
