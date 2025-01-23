@@ -39,4 +39,20 @@ public class Order {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public void update(Order order) {
+        if (order.getPerson() != null) {
+            this.person = order.getPerson();
+        }
+        if (order.getEvent() != null) {
+            this.event = order.getEvent();
+        }
+        if (order.getMeatDoneness() != null) {
+            this.meatDoneness = order.getMeatDoneness();
+        }
+        if (order.getNotes() != null) {
+            this.notes = order.getNotes();
+        }
+    }
+
 }

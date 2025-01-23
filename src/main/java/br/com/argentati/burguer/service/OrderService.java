@@ -63,6 +63,36 @@ public class OrderService {
     }
 
     /**
+     * Obtém os pedidos de uma pessoa
+     *
+     * @param pageable Paginação
+     * @param personId ID da pessoa
+     * @return Pedidos da pessoa
+     */
+    public Page<OrderDTO> getOrdersByPerson(Pageable pageable, Long personId) {
+        logger.info(String.format("Obtendo pedidos do pessoa %s...", personId));
+
+        return orderRepository.findOrdersByPersonId(personId, pageable)
+                .map(OrderDTO::new);
+    }
+
+    /**
+     * Obtém um pedido por ID
+     *
+     * @param id ID do pedido
+     * @return Pedido
+     * @throws RecordNotFoundException
+     */
+    public OrderDTO getOrderById(Long id) throws RecordNotFoundException {
+        logger.info("Obtendo pedido por ID: " + id);
+
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Pedido não encontrado."));
+
+        return new OrderDTO(order);
+    }
+
+    /**
      * Cria um pedido
      *
      * @param orderDTO DTO com os dados do pedido

@@ -13,4 +13,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Page<Order> findOrdersByEventId(Long eventId, Pageable pageable);
 
+    Page<Order> findOrdersByPersonId(Long personId, Pageable pageable);
+
 }

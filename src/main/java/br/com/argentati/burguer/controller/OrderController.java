@@ -23,13 +23,24 @@ public class OrderController extends RestCommonService {
     }
 
     @GetMapping
-    public Page<OrderDTO> getOrders(@PageableDefault(size = 15) Pageable pageable) {
-        return orderService.getOrders(pageable);
+    public ResponseEntity<Page<OrderDTO>> getOrders(@PageableDefault(size = 15) Pageable pageable) {
+        return super.buildDefaultResponseForPage(orderService.getOrders(pageable));
     }
 
     @GetMapping("/event")
-    public Page<OrderDTO> getOrdersByEvent(@PageableDefault(size = 15) Pageable pageable, @RequestParam(name = "eventId") Long eventId) {
-        return orderService.getOrdersByEvent(pageable, eventId);
+    public ResponseEntity<Page<OrderDTO>> getOrdersByEvent(@PageableDefault(size = 15) Pageable pageable, @RequestParam(name = "eventId") Long eventId) {
+        return super.buildDefaultResponseForPage(orderService.getOrdersByEvent(pageable, eventId));
+    }
+
+    @GetMapping("/person")
+    public ResponseEntity<Page<OrderDTO>> getOrdersByPerson(@PageableDefault(size = 15) Pageable pageable,  @RequestParam(name = "personId") Long personId) {
+        Page<OrderDTO> page = orderService.getOrdersByPerson(pageable, personId);
+        return super.buildDefaultResponseForPage(page);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDTO> getOrder(@PathVariable Long id) throws RecordNotFoundException {
+        return super.buildResponseForEntity(orderService.getOrderById(id));
     }
 
     @PostMapping
