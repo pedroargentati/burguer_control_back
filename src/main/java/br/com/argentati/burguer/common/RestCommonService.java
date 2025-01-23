@@ -2,6 +2,7 @@ package br.com.argentati.burguer.common;
 
 
 import br.com.argentati.burguer.exception.RecordNotFoundException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,8 +11,25 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Base64;
+import java.util.List;
 
 public class RestCommonService {
+
+    // Método para listas não paginadas
+    protected <T> ResponseEntity<List<T>> buildDefaultResponseForList(List<T> entities) {
+        if (entities == null || entities.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(entities);
+    }
+
+    // Método para listas paginadas (Page)
+    protected <T> ResponseEntity<Page<T>> buildDefaultResponseForPage(Page<T> page) {
+        if (page == null || page.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(page);
+    }
 
     protected <T> ResponseEntity<T> buildResponseForPost(T entity, Object... ids) {
         if (entity == null || ids == null || ids.length == 0) {
