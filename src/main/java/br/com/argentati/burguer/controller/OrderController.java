@@ -9,8 +9,11 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/order")
@@ -35,6 +38,17 @@ public class OrderController extends RestCommonService {
     @GetMapping("/person")
     public ResponseEntity<Page<OrderDTO>> getOrdersByPerson(@PageableDefault(size = 15) Pageable pageable,  @RequestParam(name = "personId") Long personId) {
         Page<OrderDTO> page = orderService.getOrdersByPerson(pageable, personId);
+        return super.buildDefaultResponseForPage(page);
+    }
+
+    @GetMapping("/person/period")
+    public ResponseEntity<Page<OrderDTO>> getOrdersByPersonAndDateRange(
+            @PageableDefault(size = 15) Pageable pageable,
+            @RequestParam(name = "personId") Long personId,
+            @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+
+        Page<OrderDTO> page = orderService.getOrdersByPersonAndDateRange(pageable, personId, startDate, endDate);
         return super.buildDefaultResponseForPage(page);
     }
 

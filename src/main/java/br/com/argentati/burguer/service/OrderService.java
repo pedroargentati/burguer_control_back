@@ -77,6 +77,20 @@ public class OrderService {
     }
 
     /**
+     * Obtém os pedidos de uma pessoa em um intervalo de datas
+     *
+     * @param pageable   Paginação
+     * @param personId   ID da pessoa
+     * @param startDate  Data inicial
+     * @param endDate    Data final
+     * @return Pedidos da pessoa no intervalo de datas
+     */
+    public Page<OrderDTO> getOrdersByPersonAndDateRange(Pageable pageable, Long personId, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderRepository.findOrdersByPersonIdAndDateRange(pageable, personId, startDate, endDate)
+                .map(OrderDTO::new);
+    }
+
+    /**
      * Obtém um pedido por ID
      *
      * @param id ID do pedido
