@@ -3,6 +3,7 @@ package br.com.argentati.burguer.controller;
 import br.com.argentati.burguer.common.RestCommonService;
 import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.PersonDTO;
+import br.com.argentati.burguer.model.entity.Person;
 import br.com.argentati.burguer.service.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +36,9 @@ public class PersonController extends RestCommonService {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<PersonDTO> deletePerson(@PathVariable Long id) throws RecordNotFoundException {
-        personService.deletePerson(id);
-        return ResponseEntity.noContent().build();
+        var person = personService.deletePerson(id);
+
+        return super.buildResponseForDelete(person);
     }
 
 }

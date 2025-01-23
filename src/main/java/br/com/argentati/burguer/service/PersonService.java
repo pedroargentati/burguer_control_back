@@ -71,10 +71,12 @@ public class PersonService {
      * @throws RecordNotFoundException Se a pessoa não for encontrada.
      */
     @Transactional
-    public void deletePerson(Long id) throws RecordNotFoundException {
+    public PersonDTO deletePerson(Long id) throws RecordNotFoundException {
         Person person = this.getEntityPerson(id);
 
         personRepository.delete(person);
+
+        return new PersonDTO(person);
     }
 
 }

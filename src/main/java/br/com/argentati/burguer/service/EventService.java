@@ -71,10 +71,12 @@ public class EventService {
      * @throws RecordNotFoundException Se o evento não for encontrado.
      */
     @Transactional
-    public void deleteEvent(Long id) throws RecordNotFoundException {
+    public EventDTO deleteEvent(Long id) throws RecordNotFoundException {
         Event event = this.getEntityEvent(id);
 
         eventRepository.delete(event);
+
+        return new EventDTO(event);
     }
 
 }
