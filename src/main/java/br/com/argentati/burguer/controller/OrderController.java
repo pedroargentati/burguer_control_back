@@ -58,10 +58,17 @@ public class OrderController extends RestCommonService {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@Valid @RequestBody OrderDTO orderDTO) throws RecordNotFoundException {
-        Order orderCreated = orderService.createOrder(orderDTO);
+    public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderDTO orderDTO) throws RecordNotFoundException {
+        OrderDTO orderCreated = orderService.createOrder(orderDTO);
 
-        return super.buildResponseForPost(orderCreated, orderCreated.getId());
+        return super.buildResponseForPost(orderCreated, orderCreated.id());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @Valid @RequestBody OrderDTO orderDTO) throws RecordNotFoundException {
+        OrderDTO orderUpdated = orderService.updateOrder(id, orderDTO);
+
+        return super.buildResponseForEntity(orderUpdated);
     }
 
 }

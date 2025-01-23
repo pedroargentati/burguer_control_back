@@ -9,6 +9,7 @@ import br.com.argentati.burguer.model.entity.Order;
 import br.com.argentati.burguer.model.entity.Person;
 import br.com.argentati.burguer.repository.OrderRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -107,6 +108,20 @@ public class OrderService {
     }
 
     /**
+     * Obtém um pedido por ID
+     *
+     * @param id ID do pedido
+     * @return Pedido
+     * @throws RecordNotFoundException
+     */
+    public Order getOrderByIdEntity(Long id) throws RecordNotFoundException {
+        logger.info("Obtendo pedido por ID: " + id);
+
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Pedido não encontrado."));
+    }
+
+    /**
      * Cria um pedido
      *
      * @param orderDTO DTO com os dados do pedido
@@ -115,7 +130,7 @@ public class OrderService {
      * @throws OrderAlreadyExistsException
      */
     @Transactional
-    public Order createOrder(OrderDTO orderDTO) throws RecordNotFoundException, OrderAlreadyExistsException {
+    public OrderDTO createOrder(OrderDTO orderDTO) throws RecordNotFoundException, OrderAlreadyExistsException {
         logger.info("Iniciando criação do pedido: " + orderDTO);
 
         Event event = eventService.getEntityEvent(orderDTO.eventId());
@@ -136,7 +151,26 @@ public class OrderService {
 
         logger.info("Pedido sendo salvo: " + order);
 
-        return orderRepository.save(order);
+        return new OrderDTO(orderRepository.save(order));
     }
 
+    /**
+     * Atualiza um pedido
+     *
+     * @param id       ID do pedido
+     * @param orderDTO DTO com os dados do pedido
+     * @return Pedido atualizado
+     * @throws RecordNotFoundException
+     */
+    public OrderDTO updateOrder(Long id, OrderDTO orderDTO) throws RecordNotFoundException {
+        logger.info("Iniciando atualização do pedido: " + orderDTO);
+
+        Order order = this.getOrderByIdEntity(id);
+
+        order.update(orderDTO);
+
+        logger.info("Pedido sendo atualizado: " + order);
+
+        return new OrderDTO(orderRepository.save(order));
+    }
 }

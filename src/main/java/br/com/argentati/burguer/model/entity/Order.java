@@ -2,6 +2,7 @@ package br.com.argentati.burguer.model.entity;
 
 import br.com.argentati.burguer.converter.MeatDonenessConverter;
 import br.com.argentati.burguer.enums.MeatDoneness;
+import br.com.argentati.burguer.model.dto.OrderDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,18 +41,12 @@ public class Order {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public void update(Order order) {
-        if (order.getPerson() != null) {
-            this.person = order.getPerson();
+    public void update(OrderDTO order) {
+        if (order.meatDoneness() != null) {
+            this.meatDoneness = MeatDoneness.fromString(order.meatDoneness());
         }
-        if (order.getEvent() != null) {
-            this.event = order.getEvent();
-        }
-        if (order.getMeatDoneness() != null) {
-            this.meatDoneness = order.getMeatDoneness();
-        }
-        if (order.getNotes() != null) {
-            this.notes = order.getNotes();
+        if (order.notes() != null) {
+            this.notes = order.notes();
         }
     }
 
