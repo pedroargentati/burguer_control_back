@@ -15,7 +15,13 @@ import java.util.List;
 
 public class RestCommonService {
 
-    // Método para listas não paginadas
+    /**
+     * Constrói uma resposta padrão para listas
+     *
+     * @param entities Entidades
+     * @param <T>      Tipo da entidade
+     * @return Resposta
+     */
     protected <T> ResponseEntity<List<T>> buildDefaultResponseForList(List<T> entities) {
         if (entities == null || entities.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -23,7 +29,13 @@ public class RestCommonService {
         return ResponseEntity.ok(entities);
     }
 
-    // Método para listas paginadas (Page)
+    /**
+     * Constrói uma resposta padrão para páginas
+     *
+     * @param page Página
+     * @param <T>  Tipo da entidade
+     * @return Resposta
+     */
     protected <T> ResponseEntity<Page<T>> buildDefaultResponseForPage(Page<T> page) {
         if (page == null || page.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -31,6 +43,14 @@ public class RestCommonService {
         return ResponseEntity.ok(page);
     }
 
+    /**
+     * Constrói uma resposta para POST
+     *
+     * @param entity Entidade
+     * @param ids    IDs
+     * @param <T>    Tipo da entidade
+     * @return Resposta
+     */
     protected <T> ResponseEntity<T> buildResponseForPost(T entity, Object... ids) {
         if (entity == null || ids == null || ids.length == 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -53,7 +73,13 @@ public class RestCommonService {
         return new ResponseEntity<>(entity, headers, HttpStatus.CREATED);
     }
 
-    // Método para construir uma resposta com uma entidade única
+    /**
+     * Constrói uma resposta para PUT
+     *
+     * @param entity Entidade
+     * @param <T>    Tipo da entidade
+     * @return Resposta
+     */
     protected <T> ResponseEntity<T> buildResponseForEntity(T entity) throws RecordNotFoundException {
         if (entity == null) {
             throw new RecordNotFoundException("Entidade não encontrada.");
@@ -61,11 +87,26 @@ public class RestCommonService {
         return ResponseEntity.ok(entity);
     }
 
+    /**
+     * Constrói uma resposta para DELETE
+     *
+     * @param entity Entidade
+     * @param <T>    Tipo da entidade
+     * @return Resposta
+     */
     protected <T> ResponseEntity<T> buildResponseForDelete(T entity) throws RecordNotFoundException {
         return this.buildResponseForEntity(entity);
     }
 
-    // Método para construir uma resposta para um arquivo
+    /**
+     * Constrói uma resposta para arquivos
+     *
+     * @param fileData    Dados do arquivo
+     * @param fileName    Nome do arquivo
+     * @param mediaType   Tipo de mídia
+     * @param asAttachment Se o arquivo deve ser enviado como anexo
+     * @return Resposta
+     */
     protected ResponseEntity<byte[]> buildResponseForFile(byte[] fileData, String fileName, MediaType mediaType, boolean asAttachment) {
         if (fileData == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -79,7 +120,13 @@ public class RestCommonService {
         }
     }
 
-    // Método para criar resposta para imagens em Base64
+    /**
+     * Constrói uma resposta para imagens
+     *
+     * @param imageData Dados da imagem
+     * @param chave     Chave
+     * @return Resposta
+     */
     protected ResponseEntity<String> buildResponseForImage(byte[] imageData, String chave) {
         if (imageData == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
