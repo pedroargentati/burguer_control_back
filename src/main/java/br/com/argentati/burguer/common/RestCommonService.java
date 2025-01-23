@@ -13,6 +13,9 @@ import java.net.URI;
 import java.util.Base64;
 import java.util.List;
 
+/**
+ * Serviço com métodos comuns para REST.
+ */
 public class RestCommonService {
 
     /**
