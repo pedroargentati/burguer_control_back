@@ -1,6 +1,9 @@
 package br.com.argentati.burguer.model.entity;
 
+import br.com.argentati.burguer.model.dto.IngredientDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +13,8 @@ import java.time.LocalDateTime;
 @Table(name = "ingredients")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Ingredient {
 
     @Id
@@ -24,4 +29,10 @@ public class Ingredient {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public void update(IngredientDTO ingredientDTO) {
+        this.name = ingredientDTO.name();
+        this.category = ingredientDTO.category();
+    }
+
 }

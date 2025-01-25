@@ -5,9 +5,10 @@ import br.com.argentati.burguer.model.entity.Ingredient;
 public record IngredientDTO(
         Long id,
         String name,
-        String category
+        String category,
+        Boolean byPass
 ) {
     public IngredientDTO(Ingredient ingredient) {
-        this(ingredient.getId(), ingredient.getName(), ingredient.getCategory());
+        this(ingredient.getId(), ingredient.getName(), ingredient.getCategory(), Boolean.FALSE);
     }
 }

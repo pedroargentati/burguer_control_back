@@ -193,7 +193,6 @@ public class OrderService {
         order.setStatus(status);
 
         logger.info("Pedido sendo atualizado: " + order);
-
         return new OrderDTO(orderRepository.save(order));
     }
 
