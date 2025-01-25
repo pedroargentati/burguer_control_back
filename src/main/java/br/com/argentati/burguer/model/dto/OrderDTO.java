@@ -7,7 +7,8 @@ public record OrderDTO(
         Long personId,
         Long eventId,
         String meatDoneness,
-        String notes
+        String notes,
+        String status
 ) {
     public OrderDTO(Order order) {
         this(
@@ -15,7 +16,8 @@ public record OrderDTO(
                 order.getPerson() != null ? order.getPerson().getId() : null,
                 order.getEvent() != null ? order.getEvent().getId() : null,
                 order.getMeatDoneness() != null ? order.getMeatDoneness().toString() : null,
-                order.getNotes()
+                order.getNotes(),
+                order.getStatus().toString()
         );
     }
 

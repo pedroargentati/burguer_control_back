@@ -1,6 +1,7 @@
 package br.com.argentati.burguer.service;
 
 import br.com.argentati.burguer.enums.MeatDoneness;
+import br.com.argentati.burguer.enums.Status;
 import br.com.argentati.burguer.exception.OrderAlreadyExistsException;
 import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.OrderDTO;
@@ -147,6 +148,7 @@ public class OrderService {
                 .meatDoneness(MeatDoneness.fromString(orderDTO.meatDoneness()))
                 .person(person)
                 .event(event)
+                .status(Status.REALIZADO)
                 .build();
 
         logger.info("Pedido sendo salvo: " + order);
@@ -169,6 +171,18 @@ public class OrderService {
         Order order = this.getOrderByIdEntity(id);
 
         order.update(orderDTO);
+
+        logger.info("Pedido sendo atualizado: " + order);
+
+        return new OrderDTO(orderRepository.save(order));
+    }
+
+    @Transactional
+    public OrderDTO updateOrderStatus(Long id, Status status) throws RecordNotFoundException {
+        logger.info("Iniciando atualização do status do pedido: " + id);
+        Order order = this.getOrderByIdEntity(id);
+
+        order.setStatus(status);
 
         logger.info("Pedido sendo atualizado: " + order);
 

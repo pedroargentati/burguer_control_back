@@ -2,6 +2,7 @@ package br.com.argentati.burguer.model.entity;
 
 import br.com.argentati.burguer.converter.MeatDonenessConverter;
 import br.com.argentati.burguer.enums.MeatDoneness;
+import br.com.argentati.burguer.enums.Status;
 import br.com.argentati.burguer.model.dto.OrderDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,6 +39,10 @@ public class Order {
     @Column(columnDefinition = "TEXT")
     private String notes;
 
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -47,6 +52,10 @@ public class Order {
         }
         if (order.notes() != null) {
             this.notes = order.notes();
+        }
+
+        if (order.status() != null) {
+            this.status = Status.fromString(order.status());
         }
     }
 

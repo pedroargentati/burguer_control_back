@@ -1,6 +1,7 @@
 package br.com.argentati.burguer.controller;
 
 import br.com.argentati.burguer.common.RestCommonService;
+import br.com.argentati.burguer.enums.Status;
 import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.OrderDTO;
 import br.com.argentati.burguer.model.entity.Order;
@@ -67,6 +68,13 @@ public class OrderController extends RestCommonService {
     @PutMapping("/{id}")
     public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @Valid @RequestBody OrderDTO orderDTO) throws RecordNotFoundException {
         OrderDTO orderUpdated = orderService.updateOrder(id, orderDTO);
+
+        return super.buildResponseForEntity(orderUpdated);
+    }
+
+    @PatchMapping("/update/status/{id}")
+    public ResponseEntity<OrderDTO> patchOrder(@PathVariable Long id, @Valid @RequestBody OrderDTO orderDTO) throws RecordNotFoundException {
+        OrderDTO orderUpdated = orderService.updateOrderStatus(id, Status.fromString(orderDTO.status()));
 
         return super.buildResponseForEntity(orderUpdated);
     }
