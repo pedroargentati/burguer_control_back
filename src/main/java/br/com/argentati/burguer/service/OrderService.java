@@ -177,11 +177,19 @@ public class OrderService {
         return new OrderDTO(orderRepository.save(order));
     }
 
+    /**
+     * Atualiza o status de um pedido
+     *
+     * @param id     ID do pedido
+     * @param status Novo status
+     * @return Pedido atualizado
+     * @throws RecordNotFoundException
+     */
     @Transactional
     public OrderDTO updateOrderStatus(Long id, Status status) throws RecordNotFoundException {
         logger.info("Iniciando atualização do status do pedido: " + id);
-        Order order = this.getOrderByIdEntity(id);
 
+        Order order = this.getOrderByIdEntity(id);
         order.setStatus(status);
 
         logger.info("Pedido sendo atualizado: " + order);
