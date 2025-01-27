@@ -2,14 +2,18 @@ package br.com.argentati.burguer.model.dto;
 
 import br.com.argentati.burguer.model.entity.OrderIngredient;
 
+import java.util.Collections;
+import java.util.Set;
+
 public record OrderIngredientDTO(
         Long orderId,
-        Long ingredientId,
+        Set<Long> ingredientList,
         String ingredientName,
         Integer quantity
 ) {
+
     public OrderIngredientDTO(OrderIngredient orderIngredient) {
-        this(orderIngredient.getId().getOrder().getId(), orderIngredient.getId().getIngredient().getId(),
+        this(orderIngredient.getId().getOrder().getId(), Collections.emptySet(),
                 orderIngredient.getId().getIngredient().getName(), orderIngredient.getQuantity());
     }
 }

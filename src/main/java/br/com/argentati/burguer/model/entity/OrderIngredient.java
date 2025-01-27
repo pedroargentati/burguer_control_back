@@ -2,6 +2,8 @@ package br.com.argentati.burguer.model.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "order_ingredients")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrderIngredient {
 
     @EmbeddedId
@@ -20,6 +24,8 @@ public class OrderIngredient {
     @Embeddable
     @Data
     @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class OrderIngredientId {
 
         @ManyToOne

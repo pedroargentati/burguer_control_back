@@ -63,7 +63,7 @@ public class IngredientService {
      * @return Ingrediente
      */
     public IngredientDTO getIngredientByName(String name) {
-        return ingredientRepository.findByName(name)
+        return ingredientRepository.findFirstByName(name)
                 .map(IngredientDTO::new)
                 .orElse(null);
     }
@@ -79,7 +79,11 @@ public class IngredientService {
     public IngredientDTO createIngredient(IngredientDTO ingredientDTO) throws BusinessException {
         IngredientDTO ingredient = this.getIngredientByName(ingredientDTO.name());
 
-        if (ingredient != null && ingredientDTO.byPass() == Boolean.FALSE) {
+        Boolean byPass = ingredientDTO.byPass() == null
+                ? Boolean.FALSE
+                : ingredientDTO.byPass();
+
+        if (ingredient != null && byPass == Boolean.FALSE) {
             throw new BusinessException(String.format("Ingrediente %s já cadastrado. Deseja realmente incluir outro com este mesmo nome ?", ingredientDTO.name()));
         }
 
