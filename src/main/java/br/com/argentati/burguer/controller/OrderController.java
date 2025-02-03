@@ -4,7 +4,6 @@ import br.com.argentati.burguer.common.RestCommonService;
 import br.com.argentati.burguer.enums.Status;
 import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.OrderDTO;
-import br.com.argentati.burguer.model.entity.Order;
 import br.com.argentati.burguer.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;

@@ -10,7 +10,6 @@ import br.com.argentati.burguer.model.entity.Order;
 import br.com.argentati.burguer.model.entity.Person;
 import br.com.argentati.burguer.repository.OrderRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

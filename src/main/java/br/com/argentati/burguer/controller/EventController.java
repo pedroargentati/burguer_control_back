@@ -5,6 +5,9 @@ import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.EventDTO;
 import br.com.argentati.burguer.service.EventService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,11 @@ public class EventController extends RestCommonService {
 
     public EventController(EventService eventService) {
         this.eventService = eventService;
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<EventDTO>> getEvents(@PageableDefault(size = 15) Pageable pageable) {
+        return super.buildDefaultResponseForPage(eventService.getEvents(pageable));
     }
 
     @GetMapping("/{id}")

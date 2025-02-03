@@ -6,6 +6,8 @@ import br.com.argentati.burguer.model.entity.Event;
 import br.com.argentati.burguer.repository.EventRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +18,16 @@ public class EventService {
     @Autowired
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
+    }
+
+    /**
+     * Obtém os eventos.
+     * @param pageable Paginação.
+     * @return Os eventos.
+     */
+    public Page<EventDTO> getEvents(Pageable pageable) {
+        return eventRepository.findAll(pageable)
+                .map(EventDTO::new);
     }
 
     /**
