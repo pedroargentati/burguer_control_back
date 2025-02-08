@@ -37,15 +37,15 @@ public class OrderService {
     }
 
     /**
-     * Obtém os pedidos
+     * Obtém os pedidos e inclui o nome da pessoa associada.
      *
-     * @param pageable Paginação
-     * @return Pedidos
+     * @param pageable Paginação.
+     * @return Lista paginada de pedidos.
      */
     public Page<OrderDTO> getOrders(Pageable pageable) {
-        logger.info("Obtendo pedidos...");
+        logger.info("Obtendo pedidos com nome das pessoas...");
 
-        return orderRepository.findAll(pageable)
+        return orderRepository.findAllWithPerson(pageable)
                 .map(OrderDTO::new);
     }
 

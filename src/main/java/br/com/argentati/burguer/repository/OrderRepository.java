@@ -12,6 +12,13 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    @Query("""
+        SELECT o 
+        FROM Order o 
+        LEFT JOIN FETCH o.person p
+    """)
+    Page<Order> findAllWithPerson(Pageable pageable);
+
     Optional<Order> findOrderByPersonIdAndEventId(Long personId, Long eventId);
 
     Page<Order> findOrdersByEventId(Long eventId, Pageable pageable);
