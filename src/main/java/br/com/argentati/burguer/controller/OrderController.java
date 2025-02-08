@@ -30,8 +30,8 @@ public class OrderController extends RestCommonService {
         return super.buildDefaultResponseForPage(orderService.getOrders(pageable));
     }
 
-    @GetMapping("/event")
-    public ResponseEntity<Page<OrderDTO>> getOrdersByEvent(@PageableDefault(size = 15) Pageable pageable, @RequestParam(name = "eventId") Long eventId) {
+    @GetMapping("/event/{eventId}")
+    public ResponseEntity<Page<OrderDTO>> getOrdersByEvent(@PageableDefault(size = 15) Pageable pageable, @PathVariable(name = "eventId") Long eventId) {
         return super.buildDefaultResponseForPage(orderService.getOrdersByEvent(pageable, eventId));
     }
 
