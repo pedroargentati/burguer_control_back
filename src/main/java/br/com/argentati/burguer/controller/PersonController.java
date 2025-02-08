@@ -3,9 +3,11 @@ package br.com.argentati.burguer.controller;
 import br.com.argentati.burguer.common.RestCommonService;
 import br.com.argentati.burguer.exception.RecordNotFoundException;
 import br.com.argentati.burguer.model.dto.PersonDTO;
-import br.com.argentati.burguer.model.entity.Person;
 import br.com.argentati.burguer.service.PersonService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,11 @@ public class PersonController extends RestCommonService {
 
     public PersonController(PersonService personService) {
         this.personService = personService;
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<PersonDTO>> getPersons(@PageableDefault(size = 15) Pageable pageable) {
+        return super.buildDefaultResponseForPage(personService.getAllPersons(pageable));
     }
 
     @GetMapping("/{id}")

@@ -6,6 +6,8 @@ import br.com.argentati.burguer.model.entity.Person;
 import br.com.argentati.burguer.repository.PersonRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +18,16 @@ public class PersonService {
     @Autowired
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
+    }
+
+    /**
+     * Obtém as pessoas.
+     *
+     * @return As pessoas.
+     */
+    public Page<PersonDTO> getAllPersons(Pageable pageable) {
+        return personRepository.findAll(pageable)
+                .map(PersonDTO::new);
     }
 
     /**
